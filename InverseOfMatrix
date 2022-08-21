@@ -1,0 +1,32 @@
+% INVERSE OF A MATRIX BY ROW REDUCTION
+A=input("enter the matrix to be inverted");
+[a b]=size(A);B=eye(a);
+if a~=b
+    fprintf("\n Inverse Matrix can't be calculated \n")
+else 
+    M=[A B];              % Creating an augmented matrix
+    for i=1:a-1           % Making elements of lower tringle zero
+        for j=i+1:a
+            if abs(A(i,i)/A(j,i))>0
+            fac=M(i,i)/M(j,i);
+            M(j,:)=fac*M(j,:)-M(i,:)
+            end
+        end
+    end
+    for j=1:a-1           % Making elements of upper tringle zero
+        for i=j+1:a
+            if abs(A(i,i)/A(j,i))>0
+            fac=M(i,i)/M(j,i);
+            M(j,:)=fac*M(j,:)-M(i,:);
+            end
+        end
+    end
+    for i=1:a             % Changing the digonal matrix to an identity matrix
+        if M(i,i)==0
+            break
+        else
+            M(i,:)=M(i,:)/(M(i,i));
+        end
+    end
+end
+Inv=M(:,a+1:2*a)
